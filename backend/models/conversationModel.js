@@ -8,7 +8,7 @@ const convarsationSchema = new mongoose.Schema({
             ref: 'User'
         }
     ],
-    massages: [
+    messages: [
         {
             type: mongoose.Schema.Types.ObjectId,
             ref: 'Massage',
