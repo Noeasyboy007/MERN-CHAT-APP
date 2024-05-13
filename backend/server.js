@@ -1,7 +1,7 @@
 import express from 'express';
 import colors from 'colors'
 import authRoutes from './routes/authRoutes.js'
-
+import connectToMongoDB from './db/connectToMongoDB.js';
 
 import dotenv from 'dotenv'
 
@@ -16,6 +16,9 @@ app.get("/", (req, res) => {
     res.send('Hello world')
 })
 
-app.use('/api/auth',authRoutes)
+app.use('/api/auth', authRoutes)
 
-app.listen(PORT, () => { console.log(`Server Started at PORT: ${PORT}`.bgBlue.white) });
+app.listen(PORT, () => {
+    connectToMongoDB()
+    console.log(`Server Started at PORT: ${PORT}`.bgBlue.white)
+});
