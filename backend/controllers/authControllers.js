@@ -1,3 +1,4 @@
+import brcypt from "bcryptjs"
 import User from "../models/userModel.js";
 
 // FOR NEW USER SIGNUP AUTH CONTROLLERS
@@ -17,6 +18,8 @@ export const signup = async (req, res) => {
         }
 
         //Hash password
+        const salt = await brcypt.genSalt(10); // create salt
+        const hashPassword = await brcypt.hash(password, salt)
 
 
         //For Boy profile picture
@@ -29,17 +32,33 @@ export const signup = async (req, res) => {
         const newUser = new User({
             fullName,
             username,
-            password,
+            password: hashPassword,
             gender,
-            ProfilePic: gender == 'male' ? boyProfilePic : girlProfilePic
-        })
-        await newUser.save()
+            profilePic: gender === 'male' ? boyProfilePic : girlProfilePic
+        },);
+
+        if (newUser) {
+            await newUser.save() // Save the user
+            res.status(201).json({
+                _id: newUser._id,
+                fullName: newUser.fullName,
+                username: newUser.username,
+                gender: newUser.gender,
+                createdAt: newUser.createdAt,
+            })
+        }
+        else{
+            res.status(400).json({ error: 'Invalid user Data' })
+        }
 
     }
     catch (error) {
-
+        console.log("Error in signup controller", error.message);
+        res.status(500).json({ error: 'Internal Server error' })
     }
 }
+
+
 
 export const login = (req, res) => {
     res.send('Login Page')
