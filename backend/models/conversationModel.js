@@ -11,7 +11,7 @@ const convarsationSchema = new mongoose.Schema({
     messages: [
         {
             type: mongoose.Schema.Types.ObjectId,
-            ref: 'Massage',
+            ref: 'Message',
             default: [],
         }
     ]
