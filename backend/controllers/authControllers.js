@@ -64,13 +64,44 @@ export const signup = async (req, res) => {
 }
 
 
+// FOR LOGIN CONTROLLERS
+export const login = async (req, res) => {
+    try {
+        const { username, password } = req.body;
 
-export const login = (req, res) => {
-    res.send('Login Page')
-    console.log('Login User');
+        const user = await User.findOne({ username });  //For find user
+        const isPasswordCorrect = await brcypt.compare(password, user?.password || "");  //For compare password
+
+        if (!user || !isPasswordCorrect) {
+            return res.status(400).json({ error: 'Invalid username or password' }) //  Here check Password and userName is correct or note
+        }
+
+        generateTokenAndSetCookie(user._id, res);  // Generate token and set cookie for login
+
+        res.status(200).json({
+            _id: user._id,
+            fullName: user.fullName,
+            username: user.username,
+            gender: user.gender,
+            profilePic: user.profilePic,
+            createdAt: user.createdAt,
+        })
+    }
+    catch (error) {
+        console.log("Error in Login controller", error.message);
+        res.status(500).json({ error: 'Internal Server error' })
+    }
 }
 
-export const logout = (req, res) => {
-    res.send('Logout Page')
-    console.log('Logout User');
+
+// FOR LOGOUT CONTROLLERS
+export const logout = async (req, res) => {
+    try {
+        res.cookie("jwt", { maxAge: 0 });  // Clear the cookie by using maxAge:0 mean expires 0
+        res.status(500).json({ success: "Logged out successfully" })
+    }
+    catch (error) {
+        console.log("Error in Logout controller", error.message);
+        res.status(500).json({ error: 'Internal Server error' })
+    }
 }
