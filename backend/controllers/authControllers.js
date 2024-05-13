@@ -1,5 +1,6 @@
 import brcypt from "bcryptjs"
 import User from "../models/userModel.js";
+import generateTokenAndSetCookie from "../utils/generateToken.js";
 
 // FOR NEW USER SIGNUP AUTH CONTROLLERS
 export const signup = async (req, res) => {
@@ -38,7 +39,11 @@ export const signup = async (req, res) => {
         },);
 
         if (newUser) {
+            //Generate JWT token
+            generateTokenAndSetCookie(newUser._id, res);
+
             await newUser.save() // Save the user
+
             res.status(201).json({
                 _id: newUser._id,
                 fullName: newUser.fullName,
@@ -47,7 +52,7 @@ export const signup = async (req, res) => {
                 createdAt: newUser.createdAt,
             })
         }
-        else{
+        else {
             res.status(400).json({ error: 'Invalid user Data' })
         }
 
