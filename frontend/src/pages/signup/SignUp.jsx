@@ -110,7 +110,6 @@ export default SignUp
 
 
 
-
 // STATER CODE FOR THE SIGNUP COMPONENT
 
 // import GenderCheckbox from "./GenderCheckbox"
