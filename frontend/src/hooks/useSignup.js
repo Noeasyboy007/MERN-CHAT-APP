@@ -66,3 +66,4 @@ function handelInputErrors({ fullName, username, password, confirmPassword, gend
 
     return true;
 }
+
