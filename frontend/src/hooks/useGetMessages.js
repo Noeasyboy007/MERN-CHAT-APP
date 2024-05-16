@@ -33,4 +33,4 @@ const useGetMessages = () => {
     return { messages, loading }
 }
 
-export default useGetMessages
+export default useGetMessages;

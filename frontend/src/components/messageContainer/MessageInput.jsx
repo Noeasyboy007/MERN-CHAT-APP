@@ -2,16 +2,18 @@ import { BsSend } from "react-icons/bs";
 import { useState } from "react";
 import useSendMessage from "../../hooks/useSendMessage";
 
+
 const MessageInput = () => {
     const [ message, setMessage ] = useState("");
-
     const { loading, sendMessage } = useSendMessage();
-
+   
     const handleSubmit = async (e) => {
+
         e.preventDefault();
         // console.log('submit');
 
         if (!message) return;
+        // if (!message.trim()) return;
         await sendMessage(message);
         setMessage("");
 
@@ -45,6 +47,7 @@ export default MessageInput
 
 // STRATER CODE SNIPPET
 // import { BsSend } from "react-icons/bs";
+// import useGetMessages from './../../hooks/useGetMessages';
 
 // const MessageInput = () => {
 //     return (

@@ -10,6 +10,7 @@ import { useAuthContext } from "../../context/AuthContext";
 function MessageContainer() {
     const { selectedConversation, setSelectedConversation } = useConversation();
 
+
     useEffect(() => {
         //Clear function(unmounts)
         return () => setSelectedConversation(null)
@@ -17,21 +18,19 @@ function MessageContainer() {
 
     return (
         <div className='md:min-w-[450px] flex flex-col'>
-
-            {!selectedConversation ? <NoChatSelected /> : (
+            {!selectedConversation ? (
+                <NoChatSelected />
+            ) : (
                 <>
                     {/* Header */}
                     <div className='bg-slate-500 px-4 py-2 mb-2'>
-
-                        {/* <span className='label-text'>To:</span>{" "} */}
+                        <span className='label-text'>To:</span>{" "}
                         <span className='text-gray-900 font-bold'>{selectedConversation.fullName}</span>
                     </div>
-
                     <Messages />
                     <MessageInput />
                 </>
             )}
-
         </div>
     )
 }
