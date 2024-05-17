@@ -4,7 +4,6 @@ import io from "socket.io-client";
 
 const SocketContext = createContext();
 
-// eslint-disable-next-line react-refresh/only-export-components
 export const useSocketContext = () => {
 	return useContext(SocketContext);
 };
@@ -16,7 +15,7 @@ export const SocketContextProvider = ({ children }) => {
 
 	useEffect(() => {
 		if (authUser) {
-			const socket = io("https://chat-app-p24z.onrender.com/", {
+			const socket = io("http://localhost:8000", {
 				query: {
 					userId: authUser._id,
 				},
@@ -36,7 +35,6 @@ export const SocketContextProvider = ({ children }) => {
 				setSocket(null);
 			}
 		}
-		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [authUser]);
 
 	return <SocketContext.Provider value={{ socket, onlineUsers }}>{children}</SocketContext.Provider>;
