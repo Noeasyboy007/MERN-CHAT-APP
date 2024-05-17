@@ -22,12 +22,8 @@ export const signup = async (req, res) => {
 
 		// https://avatar-placeholder.iran.liara.run/
 
-		// const boyProfilePic = `https://api.dicebear.com/8.x/adventurer/svg?seed=${username}`;
-		const boyProfilePic = `https://api.dicebear.com/8.x/micah/svg?seed=${username}`;
-		// const boyProfilePic = `https://eu.ui-avatars.com/api/?name=${fullName}`;
-		// const boyProfilePic = `https://api.dicebear.com/8.x/micah/svg?=${fullName}`;
-		const girlProfilePic = `https://api.dicebear.com/8.x/adventurer/svg?seed=${username}`;
-		// const girlProfilePic = `https://eu.ui-avatars.com/api/?name=${fullName}`;
+		const boyProfilePic = `https://avatar.iran.liara.run/public/boy?username=${username}`;
+		const girlProfilePic = `https://avatar.iran.liara.run/public/girl?username=${username}`;
 
 		const newUser = new User({
 			fullName,
@@ -39,7 +35,7 @@ export const signup = async (req, res) => {
 
 		if (newUser) {
 			// Generate JWT token here
-			generateTokenAndSetCookie(newUser._id, res); 
+			generateTokenAndSetCookie(newUser._id, res);
 			await newUser.save();
 
 			res.status(201).json({
